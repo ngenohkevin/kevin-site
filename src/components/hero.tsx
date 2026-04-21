@@ -43,7 +43,7 @@ export function Hero() {
           Rate Card · Portfolio
         </motion.div>
 
-        <h1 className="font-serif font-normal leading-[0.92] tracking-tightest text-cream">
+        <h1 className="font-serif font-normal text-[clamp(3.25rem,11vw,10.5rem)] leading-[0.92] tracking-tightest text-cream">
           {["Websites,", "web apps &", "mobile apps."].map((line, i) => (
             <span key={i} className="block overflow-hidden">
               <motion.span
