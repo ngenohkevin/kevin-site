@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { UmamiAnalytics } from "@/components/umami";
+
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://kevin.iopulse.cloud";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,7 +21,7 @@ const instrument = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://kevin.iopulse.cloud"),
+  metadataBase: new URL(siteUrl),
   title: "Kevin Ngenoh — Web & Software Developer",
   description:
     "Modern websites, web apps, and native mobile apps for brands, creators, and businesses. Building for the web since 2020. Based in Eldoret, Kenya.",
@@ -36,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://kevin.iopulse.cloud",
+    url: siteUrl,
     title: "Kevin Ngenoh — Web & Software Developer",
     description:
       "Modern websites, web apps, and native mobile apps for brands, creators, and businesses. Since 2020.",
@@ -61,6 +64,7 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${instrument.variable}`}>
       <body>
         <SmoothScroll>{children}</SmoothScroll>
+        <UmamiAnalytics />
       </body>
     </html>
   );

@@ -14,6 +14,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
+ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_UMAMI_WEBSITE_ID
+ARG NEXT_PUBLIC_UMAMI_URL
+
 ENV NEXT_TELEMETRY_DISABLED=1
 RUN npm run build
 
