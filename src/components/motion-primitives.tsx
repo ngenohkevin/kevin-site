@@ -4,13 +4,13 @@ import { motion, useInView, useMotionValue, useSpring, useTransform } from "moti
 import { useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 
-/* ---------- Reveal: fade + rise on in-view ---------- */
+/* ---------- Reveal: fade + rise on in-view (uses useInView hook for reliability with Lenis) ---------- */
 export function Reveal({
   children,
   delay = 0,
   y = 24,
   className,
-  amount = 0.3,
+  amount = 0.2,
   once = true,
 }: {
   children: React.ReactNode;
@@ -20,11 +20,14 @@ export function Reveal({
   amount?: number;
   once?: boolean;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once, amount });
+
   return (
     <motion.div
+      ref={ref}
       initial={{ opacity: 0, y }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once, amount }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y }}
       transition={{ duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >
@@ -47,14 +50,16 @@ export function LineReveal({
   delay?: number;
   stagger?: number;
 }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
   return (
-    <div className={className}>
+    <div ref={ref} className={className}>
       {lines.map((line, i) => (
         <div key={i} className={cn("overflow-hidden", lineClassName)}>
           <motion.div
             initial={{ y: "105%" }}
-            whileInView={{ y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
+            animate={isInView ? { y: 0 } : { y: "105%" }}
             transition={{
               duration: 1.1,
               delay: delay + i * stagger,
